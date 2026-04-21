@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Model weights (too large for git)
+models/finetuned*/
+models/finetuned/
+
+# Scraped / generated data (grows over time, not source code)
+data/scraped_comments.csv
+data/*_test.csv
+data/*_tmp.csv
+data/*.json
+data/*.html
+data/*.tsv
+data/wrime_sample_for_review.csv
+data/benchmark_results.csv
+
+# Benchmark images
+models/*.png
+
+# Streamlit
+.streamlit/
+
+# OS
+.DS_Store
+Thumbs.db
