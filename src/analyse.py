@@ -6,11 +6,13 @@ Usage:
     python src/analyse.py --keyword "資生堂" --source cosme --max_products 5
     python src/analyse.py --keyword "モスバーガー" --source tabelog --max_restaurants 5
     python src/analyse.py --keyword "ソニー" --source kakaku --max_products 5
+    python src/analyse.py --keyword "任天堂" --source twitter --max_tweets 100 --bearer_token YOUR_TOKEN
     python src/analyse.py --keyword "モスバーガー" --source all --max_articles 25 --max_restaurants 5
 """
 
 import argparse
 import io
+import os
 import sys
 from datetime import date
 from pathlib import Path
@@ -29,6 +31,7 @@ from src.scraper import run as scrape_yahoo
 from src.scraper_cosme import run as scrape_cosme
 from src.scraper_tabelog import run as scrape_tabelog
 from src.scraper_kakaku import run as scrape_kakaku
+from src.scraper_twitter import run as scrape_twitter
 from src.sentiment import load_model, predict_batch, FINETUNED_MODEL
 
 MODEL_NAME = FINETUNED_MODEL
@@ -65,7 +68,7 @@ def print_summary(keyword: str, df: pd.DataFrame):
         print(f"  [{row['score']:.2f}] {row['comment'][:80]}")
 
 
-def collect_new_comments(keyword: str, source: str, max_articles: int, max_products: int, max_restaurants: int) -> pd.DataFrame:
+def collect_new_comments(keyword: str, source: str, max_articles: int, max_products: int, max_restaurants: int, max_tweets: int = 100, bearer_token: str | None = None) -> pd.DataFrame:
     frames = []
 
     if source in ("yahoo", "all"):
@@ -103,14 +106,27 @@ def collect_new_comments(keyword: str, source: str, max_articles: int, max_produ
         frames.append(df)
         Path(tmp).unlink(missing_ok=True)
 
+    if source in ("twitter", "all"):
+        token = bearer_token or os.environ.get("TWITTER_BEARER_TOKEN")
+        if not token:
+            print("Skipping Twitter: no bearer token provided (use --bearer_token or TWITTER_BEARER_TOKEN env var).")
+        else:
+            tmp = "data/_twitter_tmp.csv"
+            scrape_twitter(keyword=keyword, bearer_token=token, max_tweets=max_tweets, output=tmp)
+            df = pd.read_csv(tmp, encoding="utf-8-sig")
+            df = df.rename(columns={"tweet_url": "article_url", "author": "article_title"})
+            df["source"] = "twitter"
+            frames.append(df)
+            Path(tmp).unlink(missing_ok=True)
+
     if not frames:
         return pd.DataFrame()
 
     return pd.concat(frames, ignore_index=True)
 
 
-def run(keyword: str, source: str, max_articles: int, max_products: int, max_restaurants: int, output: str):
-    new_df = collect_new_comments(keyword, source, max_articles, max_products, max_restaurants)
+def run(keyword: str, source: str, max_articles: int, max_products: int, max_restaurants: int, output: str, max_tweets: int = 100, bearer_token: str | None = None):
+    new_df = collect_new_comments(keyword, source, max_articles, max_products, max_restaurants, max_tweets, bearer_token)
 
     if new_df.empty:
         print("No comments collected.")
@@ -150,10 +166,12 @@ def run(keyword: str, source: str, max_articles: int, max_products: int, max_res
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--keyword", required=True, help="Japanese search keyword e.g. 任天堂")
-    parser.add_argument("--source", choices=["yahoo", "cosme", "tabelog", "kakaku", "all"], default="yahoo")
+    parser.add_argument("--source", choices=["yahoo", "cosme", "tabelog", "kakaku", "twitter", "all"], default="yahoo")
     parser.add_argument("--max_articles", type=int, default=25, help="Yahoo: max articles to scrape")
-    parser.add_argument("--max_products", type=int, default=5, help="@cosme: max products to scrape")
+    parser.add_argument("--max_products", type=int, default=5, help="@cosme/Kakaku: max products to scrape")
     parser.add_argument("--max_restaurants", type=int, default=5, help="Tabelog: max restaurant locations")
+    parser.add_argument("--max_tweets", type=int, default=100, help="Twitter: max tweets to fetch")
+    parser.add_argument("--bearer_token", default=os.environ.get("TWITTER_BEARER_TOKEN"), help="Twitter API v2 Bearer Token")
     parser.add_argument("--output", default="data/scraped_comments.csv")
     args = parser.parse_args()
-    run(args.keyword, args.source, args.max_articles, args.max_products, args.max_restaurants, args.output)
+    run(args.keyword, args.source, args.max_articles, args.max_products, args.max_restaurants, args.output, args.max_tweets, args.bearer_token)
