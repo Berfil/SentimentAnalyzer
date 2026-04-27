@@ -23,11 +23,11 @@ ANNOTATIONS_FILE = DATA_DIR / "annotations.json"
 
 SENTIMENT_COLORS = {
     "positive": "#10b981",
-    "neutral":  "#6366f1",
-    "negative": "#ef4444",
+    "neutral":  "#71717a",
+    "negative": "#E11D48",
 }
-CARD_BG     = {"positive": "#f0fdf4", "neutral": "#eef2ff", "negative": "#fef2f2"}
-CARD_BORDER = {"positive": "#86efac", "neutral": "#c7d2fe", "negative": "#fca5a5"}
+CARD_BG     = {"positive": "rgba(16,185,129,0.08)",  "neutral": "rgba(113,113,122,0.08)", "negative": "rgba(225,29,72,0.08)"}
+CARD_BORDER = {"positive": "rgba(16,185,129,0.25)",  "neutral": "rgba(113,113,122,0.2)",  "negative": "rgba(225,29,72,0.25)"}
 
 
 def load_annotations() -> dict:
@@ -43,30 +43,32 @@ def save_annotations(data: dict):
 
 
 def chart_layout(fig: go.Figure, height: int = 340) -> go.Figure:
-    """Apply a consistent clean theme to every Plotly figure."""
+    """Apply Kokoro dark theme to every Plotly figure."""
     fig.update_layout(
         height=height,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(family="Inter, sans-serif", size=12, color="#374151"),
+        font=dict(family="Satoshi, sans-serif", size=12, color="#8F8F8F"),
         margin=dict(t=16, b=16, l=8, r=8),
         legend=dict(
-            bgcolor="rgba(255,255,255,0.8)",
-            bordercolor="#e5e7eb",
+            bgcolor="rgba(13,13,13,0.8)",
+            bordercolor="rgba(255,255,255,0.07)",
             borderwidth=1,
-            font=dict(size=11),
+            font=dict(size=11, color="#8F8F8F"),
         ),
         xaxis=dict(
-            gridcolor="#f3f4f6",
-            linecolor="#e5e7eb",
-            tickfont=dict(size=11),
-            title_font=dict(size=12),
+            gridcolor="rgba(255,255,255,0.04)",
+            linecolor="rgba(255,255,255,0.07)",
+            tickfont=dict(size=11, color="#8F8F8F"),
+            title_font=dict(size=12, color="#8F8F8F"),
+            zeroline=False,
         ),
         yaxis=dict(
-            gridcolor="#f3f4f6",
-            linecolor="#e5e7eb",
-            tickfont=dict(size=11),
-            title_font=dict(size=12),
+            gridcolor="rgba(255,255,255,0.04)",
+            linecolor="rgba(255,255,255,0.07)",
+            tickfont=dict(size=11, color="#8F8F8F"),
+            title_font=dict(size=12, color="#8F8F8F"),
+            zeroline=False,
         ),
     )
     return fig
@@ -93,86 +95,90 @@ st.set_page_config(page_title="SentimentAggregator", page_icon="📊", layout="w
 
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500&f[]=satoshi@400,500&display=swap');
 
 html, body, [class*="css"], [class*="st-"] {
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'Satoshi', sans-serif !important;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cabinet Grotesk', sans-serif !important;
+    letter-spacing: -0.02em !important;
 }
 #MainMenu, footer, header { visibility: hidden; }
 
-/* ── Main background ── */
-.stApp { background: #f8fafc; }
+/* ── Main background with dot grid ── */
+.stApp {
+    background-color: #050505;
+    background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+}
 .block-container { padding: 2rem 2.5rem 3rem !important; max-width: 1400px; }
 
 /* ── Sidebar ── */
 [data-testid="stSidebar"] {
-    background: #0f172a !important;
-    border-right: none !important;
+    background: #050505 !important;
+    border-right: 1px solid rgba(255,255,255,0.06) !important;
 }
 [data-testid="stSidebar"] > div { padding-top: 0 !important; }
-[data-testid="stSidebar"] * { color: #cbd5e1 !important; }
+[data-testid="stSidebar"] * { color: #8F8F8F !important; }
 [data-testid="stSidebar"] input,
 [data-testid="stSidebar"] textarea,
 [data-testid="stSidebar"] [data-baseweb="select"] > div {
-    background: #1e293b !important;
-    border: 1px solid #334155 !important;
-    color: #e2e8f0 !important;
+    background: #0D0D0D !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    color: #ffffff !important;
     border-radius: 8px !important;
 }
 [data-testid="stSidebar"] label {
-    font-size: 0.75rem !important;
-    font-weight: 600 !important;
+    font-size: 0.7rem !important;
+    font-weight: 500 !important;
     text-transform: uppercase !important;
-    letter-spacing: 0.06em !important;
-    color: #94a3b8 !important;
+    letter-spacing: 0.1em !important;
+    color: #525252 !important;
 }
-[data-testid="stSidebar"] hr { border-color: #1e293b !important; }
+[data-testid="stSidebar"] hr { border-color: rgba(255,255,255,0.06) !important; }
 [data-testid="stSidebar"] .stButton > button {
-    background: #6366f1 !important;
+    background: #E11D48 !important;
     color: white !important;
     border: none !important;
     border-radius: 8px !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
     font-size: 0.875rem !important;
     width: 100% !important;
-    padding: 0.65rem !important;
+    padding: 0.7rem !important;
     letter-spacing: 0.01em !important;
-    transition: background 0.15s !important;
+    transition: background 0.15s, opacity 0.15s !important;
 }
-[data-testid="stSidebar"] .stButton > button:hover {
-    background: #4f46e5 !important;
-}
+[data-testid="stSidebar"] .stButton > button:hover { opacity: 0.85 !important; }
 
 /* ── KPI metric cards ── */
 [data-testid="stMetric"] {
-    background: white !important;
-    border: 1px solid #e5e7eb !important;
+    background: rgba(13,13,13,0.8) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255,255,255,0.07) !important;
     border-radius: 14px !important;
     padding: 1.25rem 1.5rem !important;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.05) !important;
 }
 [data-testid="stMetric"] > label {
-    font-size: 0.72rem !important;
-    font-weight: 600 !important;
+    font-size: 0.68rem !important;
+    font-weight: 500 !important;
     text-transform: uppercase !important;
-    letter-spacing: 0.07em !important;
-    color: #9ca3af !important;
+    letter-spacing: 0.1em !important;
+    color: #525252 !important;
 }
 [data-testid="stMetricValue"] {
     font-size: 2rem !important;
-    font-weight: 700 !important;
-    color: #111827 !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
     line-height: 1.1 !important;
+    font-family: 'Cabinet Grotesk', sans-serif !important;
 }
-[data-testid="stMetricDelta"] {
-    font-size: 0.8rem !important;
-    font-weight: 500 !important;
-}
+[data-testid="stMetricDelta"] { font-size: 0.78rem !important; font-weight: 500 !important; }
 
 /* ── Tabs ── */
 [data-testid="stTabs"] [role="tablist"] {
-    background: white;
-    border: 1px solid #e5e7eb;
+    background: rgba(13,13,13,0.8);
+    border: 1px solid rgba(255,255,255,0.07);
     border-radius: 10px;
     padding: 0.25rem;
     gap: 0.25rem;
@@ -183,57 +189,96 @@ html, body, [class*="css"], [class*="st-"] {
     padding: 0.45rem 1.1rem !important;
     font-size: 0.875rem !important;
     font-weight: 500 !important;
-    color: #6b7280 !important;
+    color: #525252 !important;
     border: none !important;
     background: transparent !important;
+    transition: all 0.15s !important;
 }
 [data-testid="stTabs"] [role="tab"][aria-selected="true"] {
-    background: #6366f1 !important;
+    background: #E11D48 !important;
     color: white !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
 }
 
-/* ── Buttons (main area) ── */
+/* ── Containers / cards ── */
+[data-testid="stVerticalBlockBorderWrapper"] {
+    background: rgba(13,13,13,0.7) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255,255,255,0.07) !important;
+    border-radius: 14px !important;
+    padding: 1rem !important;
+}
+
+/* ── Buttons ── */
 .stButton > button {
     border-radius: 8px !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
     font-size: 0.875rem !important;
+    transition: opacity 0.15s !important;
 }
 
 /* ── Dataframe ── */
 [data-testid="stDataFrame"] {
-    border: 1px solid #e5e7eb !important;
+    border: 1px solid rgba(255,255,255,0.07) !important;
     border-radius: 12px !important;
     overflow: hidden !important;
-    background: white !important;
+    background: rgba(13,13,13,0.8) !important;
 }
 
 /* ── Alerts ── */
 [data-testid="stAlert"] {
     border-radius: 10px !important;
     border-left-width: 4px !important;
-    font-size: 0.9rem !important;
+    font-size: 0.875rem !important;
+    background: rgba(13,13,13,0.8) !important;
+    border-color: rgba(255,255,255,0.1) !important;
 }
 
 /* ── Expander ── */
 [data-testid="stExpander"] {
-    border: 1px solid #e5e7eb !important;
+    border: 1px solid rgba(255,255,255,0.07) !important;
     border-radius: 12px !important;
-    background: white !important;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.04) !important;
+    background: rgba(13,13,13,0.7) !important;
+    backdrop-filter: blur(12px) !important;
+}
+
+/* ── Selectbox / inputs ── */
+[data-baseweb="select"] > div {
+    background: rgba(13,13,13,0.8) !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    border-radius: 8px !important;
+    color: white !important;
+}
+.stTextInput input, .stNumberInput input {
+    background: rgba(13,13,13,0.8) !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    color: white !important;
+    border-radius: 8px !important;
+}
+
+/* ── Multiselect tags ── */
+[data-baseweb="tag"] {
+    background: rgba(225,29,72,0.15) !important;
+    border: 1px solid rgba(225,29,72,0.3) !important;
+    border-radius: 6px !important;
+    color: #E11D48 !important;
 }
 
 /* ── Divider ── */
-hr { border-color: #f1f5f9 !important; margin: 1.75rem 0 !important; }
+hr { border-color: rgba(255,255,255,0.06) !important; margin: 1.75rem 0 !important; }
 
-/* ── Multiselect tags ── */
-[data-baseweb="tag"] { border-radius: 6px !important; }
+/* ── Slider ── */
+[data-testid="stSlider"] [data-baseweb="slider"] [role="slider"] {
+    background: #E11D48 !important;
+}
 
 /* ── Download button ── */
 [data-testid="stDownloadButton"] > button {
     border-radius: 8px !important;
-    font-weight: 500 !important;
-    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    background: rgba(13,13,13,0.8) !important;
+    color: white !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -241,15 +286,21 @@ hr { border-color: #f1f5f9 !important; margin: 1.75rem 0 !important; }
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("""
-    <div style="padding: 1.5rem 1rem 1rem; border-bottom: 1px solid #1e293b; margin-bottom:1rem;">
-      <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.25rem;">
-        <span style="font-size:1.4rem;">📊</span>
-        <span style="font-size:1rem; font-weight:700; color:#f1f5f9; letter-spacing:-0.01em;">
-          SentimentAggregator
+    <div style="padding:1.5rem 1rem 1.25rem; border-bottom:1px solid rgba(255,255,255,0.06);
+                margin-bottom:1.25rem;">
+      <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.3rem;">
+        <div style="width:28px; height:28px; background:white; display:flex;
+                    align-items:center; justify-content:center; flex-shrink:0;">
+          <div style="width:12px; height:12px; border-radius:50%; background:#E11D48;"></div>
+        </div>
+        <span style="font-size:1rem; font-weight:800; color:#ffffff; letter-spacing:-0.02em;
+                     font-family:'Cabinet Grotesk', sans-serif;">
+          KOKORO
         </span>
       </div>
-      <p style="margin:0; font-size:0.72rem; color:#64748b; padding-left:2rem;">
-        Brand monitoring · Japan
+      <p style="margin:0; font-size:0.65rem; color:#525252; padding-left:2.4rem;
+                text-transform:uppercase; letter-spacing:0.1em;">
+        Sentiment Engine · Japan
       </p>
     </div>
     """, unsafe_allow_html=True)
@@ -308,16 +359,28 @@ with st.sidebar:
 
 # ── Page header ───────────────────────────────────────────────────────────────
 st.markdown("""
-<div style="display:flex; align-items:baseline; justify-content:space-between;
-            margin-bottom:1.5rem;">
-  <div>
-    <h1 style="margin:0; font-size:1.6rem; font-weight:700; color:#111827; letter-spacing:-0.02em;">
-      Brand Sentiment Monitor
-    </h1>
-    <p style="margin:0.2rem 0 0; font-size:0.875rem; color:#6b7280;">
-      Japanese social media · real-time analysis
-    </p>
+<div style="margin-bottom:2rem;">
+  <div style="display:inline-flex; align-items:center; gap:0.5rem; padding:0.25rem 0.75rem;
+              border-radius:999px; border:1px solid rgba(225,29,72,0.25);
+              background:rgba(225,29,72,0.05); margin-bottom:1rem;">
+    <span style="width:6px; height:6px; border-radius:50%; background:#E11D48;
+                 display:inline-block; animation:pulse 2s infinite;"></span>
+    <span style="font-size:0.65rem; font-weight:700; text-transform:uppercase;
+                 letter-spacing:0.12em; color:#E11D48;">Live Sentiment Engine</span>
   </div>
+  <h1 style="margin:0; font-size:2.5rem; font-weight:800; color:#ffffff;
+             letter-spacing:-0.03em; line-height:1.1; font-family:'Cabinet Grotesk',sans-serif;">
+    Decode the pulse of<br>
+    <span style="background:linear-gradient(90deg, #ffffff 0%, #8F8F8F 60%, #E11D48 100%);
+                 -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+                 background-clip:text;">
+      Japanese Social Media.
+    </span>
+  </h1>
+  <p style="margin:0.75rem 0 0; font-size:0.9rem; color:#525252; max-width:500px; line-height:1.6;">
+    Real-time market sentiment across Yahoo, @cosme, Tabelog and Kakaku —
+    built for the nuances of the Japanese market.
+  </p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -378,14 +441,18 @@ current_keyword: str = st.session_state.get("keyword", "")
 if df is None or df.empty:
     st.markdown("""
     <div style="display:flex; flex-direction:column; align-items:center; justify-content:center;
-                padding: 5rem 2rem; text-align:center;">
-      <div style="font-size:3.5rem; margin-bottom:1rem;">📊</div>
-      <h2 style="margin:0 0 0.5rem; font-size:1.4rem; font-weight:600; color:#111827;">
+                padding:6rem 2rem; text-align:center;">
+      <div style="width:64px; height:64px; background:rgba(13,13,13,0.8);
+                  border:1px solid rgba(255,255,255,0.07); border-radius:16px;
+                  display:flex; align-items:center; justify-content:center;
+                  font-size:1.8rem; margin-bottom:1.5rem;">📊</div>
+      <h2 style="margin:0 0 0.5rem; font-size:1.5rem; font-weight:800; color:#ffffff;
+                 font-family:'Cabinet Grotesk',sans-serif; letter-spacing:-0.02em;">
         No data loaded yet
       </h2>
-      <p style="margin:0; color:#6b7280; max-width:400px; line-height:1.6;">
-        Enter a keyword in the sidebar and click <strong>Run Analysis</strong> to scrape
-        and analyse sentiment, or load an existing CSV to explore past results.
+      <p style="margin:0; color:#525252; max-width:380px; line-height:1.7; font-size:0.875rem;">
+        Enter a keyword in the sidebar and click <strong style="color:#8F8F8F;">Run Analysis</strong>
+        to scrape and analyse sentiment, or load an existing CSV.
       </p>
     </div>
     """, unsafe_allow_html=True)
@@ -576,8 +643,9 @@ with tab_analysis:
 
     # ── Notable comments ──────────────────────────────────────────────────────
     st.markdown("<div style='height:0.5rem'></div>", unsafe_allow_html=True)
-    st.markdown("""<p style="font-size:0.75rem; font-weight:600; text-transform:uppercase;
-        letter-spacing:0.07em; color:#9ca3af; margin-bottom:0.75rem;">Notable comments</p>""",
+    st.markdown("""<p style="font-size:0.65rem; font-weight:500; text-transform:uppercase;
+        letter-spacing:0.12em; color:#525252; margin-bottom:0.75rem;
+        font-family:'Satoshi',sans-serif;">Notable comments</p>""",
         unsafe_allow_html=True)
 
     score_col = "score" if "score" in df.columns else None
@@ -585,35 +653,35 @@ with tab_analysis:
     def comment_card(row: pd.Series, sentiment: str):
         bg     = CARD_BG[sentiment]
         border = CARD_BORDER[sentiment]
-        badge_colors = {
-            "positive": ("#10b981", "#f0fdf4"),
-            "neutral":  ("#6366f1", "#eef2ff"),
-            "negative": ("#ef4444", "#fef2f2"),
-        }
-        badge_fg, badge_bg = badge_colors[sentiment]
-        label = {"positive": "Positive", "neutral": "Neutral", "negative": "Negative"}[sentiment]
+        badge_color = SENTIMENT_COLORS[sentiment]
+        label  = {"positive": "Positive", "neutral": "Neutral", "negative": "Negative"}[sentiment]
         title  = str(row.get("article_title") or row.get("product_name") or "")[:70]
         source = str(row.get("source") or "")
         score  = f"{row[score_col]:.2f}" if score_col else ""
         text   = str(row["comment"])[:320]
+        meta   = f"{source}  ·  {title}" if title else source
         return f"""
 <div style="background:{bg}; border:1px solid {border}; border-radius:12px;
-            padding:1rem 1.25rem; margin-bottom:0.65rem;">
+            padding:1rem 1.25rem; margin-bottom:0.6rem;
+            backdrop-filter:blur(12px);">
   <div style="display:flex; justify-content:space-between; align-items:center;
-              margin-bottom:0.5rem; gap:0.5rem; flex-wrap:wrap;">
+              margin-bottom:0.6rem; gap:0.5rem; flex-wrap:wrap;">
     <div style="display:flex; align-items:center; gap:0.5rem;">
-      <span style="background:{badge_bg}; color:{badge_fg}; border:1px solid {border};
-                   font-size:0.68rem; font-weight:700; padding:0.15rem 0.55rem;
-                   border-radius:999px; text-transform:uppercase; letter-spacing:0.05em;">
+      <span style="color:{badge_color}; border:1px solid {border};
+                   font-size:0.62rem; font-weight:700; padding:0.12rem 0.5rem;
+                   border-radius:999px; text-transform:uppercase; letter-spacing:0.08em;
+                   background:rgba(0,0,0,0.3);">
         {label}
       </span>
-      <span style="font-size:0.78rem; color:#6b7280; font-weight:500;">
-        {source}{" · " + title if title else ""}
+      <span style="font-size:0.75rem; color:#525252; font-weight:500; font-family:'Satoshi',sans-serif;">
+        {meta}
       </span>
     </div>
-    <span style="font-size:0.8rem; font-weight:600; color:#374151;">{score}</span>
+    <span style="font-size:0.75rem; font-weight:700; color:#8F8F8F;
+                 font-family:'Cabinet Grotesk',sans-serif;">{score}</span>
   </div>
-  <p style="margin:0; font-size:0.9rem; line-height:1.65; color:#1e293b;">{text}</p>
+  <p style="margin:0; font-size:0.88rem; line-height:1.7; color:#d4d4d4;
+            font-family:'Satoshi',sans-serif;">{text}</p>
 </div>"""
 
     def show_top(sentiment: str, tab, n: int = 5):
@@ -672,12 +740,18 @@ with tab_compare:
     if "keyword" not in compare_df.columns or compare_df["keyword"].nunique() < 2:
         st.markdown("""
         <div style="display:flex; flex-direction:column; align-items:center;
-                    padding:4rem 2rem; text-align:center;">
-          <div style="font-size:3rem; margin-bottom:1rem;">🆚</div>
-          <h3 style="margin:0 0 0.5rem; color:#111827;">No comparison data yet</h3>
-          <p style="color:#6b7280; max-width:380px; line-height:1.6;">
+                    padding:5rem 2rem; text-align:center;">
+          <div style="width:56px; height:56px; background:rgba(13,13,13,0.8);
+                      border:1px solid rgba(255,255,255,0.07); border-radius:14px;
+                      display:flex; align-items:center; justify-content:center;
+                      font-size:1.5rem; margin-bottom:1.25rem;">🆚</div>
+          <h3 style="margin:0 0 0.5rem; color:#ffffff; font-weight:800;
+                     font-family:'Cabinet Grotesk',sans-serif; letter-spacing:-0.02em;">
+            No comparison data yet
+          </h3>
+          <p style="color:#525252; max-width:360px; line-height:1.7; font-size:0.875rem;">
             Run analyses for at least two different brands, then load the full dataset
-            using <strong>Load default CSV</strong> to compare them here.
+            using <strong style="color:#8F8F8F;">Load default CSV</strong> to compare them here.
           </p>
         </div>
         """, unsafe_allow_html=True)
