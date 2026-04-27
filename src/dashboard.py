@@ -5,9 +5,10 @@ Run:
     streamlit run src/dashboard.py
 """
 
+import json
 import subprocess
 import sys
-import tempfile
+from datetime import date, timedelta
 from pathlib import Path
 
 import pandas as pd
@@ -18,6 +19,17 @@ import streamlit as st
 ROOT = Path(__file__).parent.parent
 DATA_DIR = ROOT / "data"
 RESULTS_FILE = DATA_DIR / "scraped_comments.csv"
+ANNOTATIONS_FILE = DATA_DIR / "annotations.json"
+
+
+def load_annotations() -> dict:
+    if ANNOTATIONS_FILE.exists():
+        return json.loads(ANNOTATIONS_FILE.read_text(encoding="utf-8"))
+    return {}
+
+
+def save_annotations(data: dict):
+    ANNOTATIONS_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
 st.set_page_config(
     page_title="日本語ブランド感情分析",
@@ -227,6 +239,34 @@ with tab_analysis:
 
     if "scraped_date" in df.columns and df["scraped_date"].nunique() > 1:
         st.subheader("感情トレンド (Sentiment Over Time)")
+
+        # ── Alert check ───────────────────────────────────────────────────────
+        alert_threshold = st.sidebar.slider(
+            "⚠️ Alert threshold (positive % drop)",
+            min_value=5, max_value=30, value=10, step=5,
+            help="Show a warning if positive sentiment drops by more than this % week-over-week",
+        )
+        dates_sorted = sorted(df["scraped_date"].dropna().unique())
+        if len(dates_sorted) >= 2:
+            cutoff = str(date.fromisoformat(dates_sorted[-1]) - timedelta(days=7))
+            recent = df[df["scraped_date"] > cutoff]
+            prior  = df[df["scraped_date"] <= cutoff]
+            if not prior.empty and not recent.empty:
+                recent_pos = (recent["sentiment"] == "positive").sum() / len(recent) * 100
+                prior_pos  = (prior["sentiment"]  == "positive").sum() / len(prior)  * 100
+                drop = prior_pos - recent_pos
+                if drop >= alert_threshold:
+                    st.warning(
+                        f"⚠️ **Sentiment alert** — positive % dropped **{drop:.1f} points** "
+                        f"({prior_pos:.1f}% → {recent_pos:.1f}%) over the past 7 days."
+                    )
+                elif recent_pos - prior_pos >= alert_threshold:
+                    st.success(
+                        f"📈 Positive sentiment rose **{recent_pos - prior_pos:.1f} points** "
+                        f"({prior_pos:.1f}% → {recent_pos:.1f}%) over the past 7 days."
+                    )
+
+        # ── Build daily % + 7-day rolling average ────────────────────────────
         trend = (
             df.groupby(["scraped_date", "sentiment"])
             .size()
@@ -235,17 +275,74 @@ with tab_analysis:
         total_by_date = df.groupby("scraped_date").size().reset_index(name="total")
         trend = trend.merge(total_by_date, on="scraped_date")
         trend["pct"] = trend["count"] / trend["total"] * 100
-        fig_trend = px.line(
-            trend,
-            x="scraped_date",
-            y="pct",
-            color="sentiment",
-            color_discrete_map=SENTIMENT_COLORS,
-            markers=True,
-            labels={"scraped_date": "Date", "pct": "% of comments"},
+        trend["scraped_date"] = pd.to_datetime(trend["scraped_date"])
+        trend = trend.sort_values("scraped_date")
+
+        fig_trend = go.Figure()
+        for sentiment, color in SENTIMENT_COLORS.items():
+            s = trend[trend["sentiment"] == sentiment].set_index("scraped_date")["pct"]
+            s = s.reindex(pd.date_range(s.index.min(), s.index.max(), freq="D")).fillna(None)
+            rolling = s.rolling(7, min_periods=1).mean()
+
+            # Daily dots
+            fig_trend.add_trace(go.Scatter(
+                x=s.index, y=s.values,
+                mode="markers", name=sentiment,
+                marker=dict(color=color, size=7),
+                legendgroup=sentiment,
+            ))
+            # Rolling average line
+            fig_trend.add_trace(go.Scatter(
+                x=rolling.index, y=rolling.values,
+                mode="lines", name=f"{sentiment} (7-day avg)",
+                line=dict(color=color, dash="dash", width=2),
+                legendgroup=sentiment,
+            ))
+
+        # ── Annotations ───────────────────────────────────────────────────────
+        annotations = load_annotations()
+        kw_annotations = annotations.get(current_keyword, [])
+        for ann in kw_annotations:
+            fig_trend.add_vline(
+                x=ann["date"], line_dash="dot", line_color="gray", line_width=1,
+                annotation_text=ann["text"], annotation_position="top",
+            )
+
+        fig_trend.update_layout(
+            margin=dict(t=10, b=10),
+            yaxis_ticksuffix="%",
+            yaxis_title="% of comments",
+            xaxis_title="Date",
+            legend_title="Sentiment",
         )
-        fig_trend.update_layout(margin=dict(t=10, b=10), yaxis_ticksuffix="%")
         st.plotly_chart(fig_trend, use_container_width=True)
+
+        # ── Add / delete annotation form ──────────────────────────────────────
+        with st.expander("📌 イベントを追加 / Manage annotations"):
+            ann_col1, ann_col2, ann_col3 = st.columns([1, 2, 1])
+            with ann_col1:
+                ann_date = st.date_input("Date", value=date.today())
+            with ann_col2:
+                ann_text = st.text_input("Event label", placeholder="e.g. New product launch")
+            with ann_col3:
+                st.write("")
+                st.write("")
+                if st.button("Add annotation") and ann_text:
+                    annotations.setdefault(current_keyword, []).append(
+                        {"date": str(ann_date), "text": ann_text}
+                    )
+                    save_annotations(annotations)
+                    st.rerun()
+
+            if kw_annotations:
+                st.write("**Existing annotations:**")
+                for i, ann in enumerate(kw_annotations):
+                    c1, c2 = st.columns([5, 1])
+                    c1.write(f"`{ann['date']}` — {ann['text']}")
+                    if c2.button("Delete", key=f"del_ann_{i}"):
+                        annotations[current_keyword].pop(i)
+                        save_annotations(annotations)
+                        st.rerun()
 
     if "source" in df.columns:
         st.subheader("ソース別感情 (Sentiment by Source)")
@@ -393,20 +490,38 @@ with tab_compare:
             # ── Positive sentiment trend per brand (only if multi-date data exists)
             if "scraped_date" in cdf.columns and cdf["scraped_date"].nunique() > 1:
                 st.subheader("ポジティブ率トレンド比較 (Positive Sentiment Trend)")
-                trend_rows = []
-                for brand in selected_brands:
-                    bdf = cdf[cdf["keyword"] == brand]
-                    for date_val, grp in bdf.groupby("scraped_date"):
-                        pos_pct = (grp["sentiment"] == "positive").sum() / len(grp) * 100
-                        trend_rows.append({"日付": date_val, "ブランド": brand, "ポジティブ %": round(pos_pct, 1)})
-                trend_cmp_df = pd.DataFrame(trend_rows)
-                fig_trend_cmp = px.line(
-                    trend_cmp_df,
-                    x="日付",
-                    y="ポジティブ %",
-                    color="ブランド",
-                    markers=True,
-                    labels={"日付": "Date", "ポジティブ %": "Positive %", "ブランド": "Brand"},
+                fig_trend_cmp = go.Figure()
+                palette = px.colors.qualitative.Set2
+
+                for i, brand in enumerate(selected_brands):
+                    bdf = cdf[cdf["keyword"] == brand].copy()
+                    bdf["scraped_date"] = pd.to_datetime(bdf["scraped_date"])
+                    daily = bdf.groupby("scraped_date").apply(
+                        lambda g: (g["sentiment"] == "positive").sum() / len(g) * 100
+                    ).rename("pct")
+                    daily = daily.reindex(
+                        pd.date_range(daily.index.min(), daily.index.max(), freq="D")
+                    ).fillna(None)
+                    rolling = daily.rolling(7, min_periods=1).mean()
+                    color = palette[i % len(palette)]
+
+                    fig_trend_cmp.add_trace(go.Scatter(
+                        x=daily.index, y=daily.values,
+                        mode="markers", name=brand,
+                        marker=dict(color=color, size=6),
+                        legendgroup=brand,
+                    ))
+                    fig_trend_cmp.add_trace(go.Scatter(
+                        x=rolling.index, y=rolling.values,
+                        mode="lines", name=f"{brand} (7-day avg)",
+                        line=dict(color=color, dash="dash", width=2),
+                        legendgroup=brand,
+                    ))
+
+                fig_trend_cmp.update_layout(
+                    margin=dict(t=10, b=10),
+                    yaxis_ticksuffix="%",
+                    yaxis_title="Positive %",
+                    xaxis_title="Date",
                 )
-                fig_trend_cmp.update_layout(margin=dict(t=10, b=10), yaxis_ticksuffix="%")
                 st.plotly_chart(fig_trend_cmp, use_container_width=True)
