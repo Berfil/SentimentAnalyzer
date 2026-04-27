@@ -32,13 +32,152 @@ def save_annotations(data: dict):
     ANNOTATIONS_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
 st.set_page_config(
-    page_title="日本語ブランド感情分析",
+    page_title="SentimentAggregator",
     page_icon="📊",
     layout="wide",
 )
 
-st.title("📊 日本語ブランド感情分析ダッシュボード")
-st.caption("Japanese Brand Sentiment Analysis Dashboard")
+st.markdown("""
+<style>
+/* ── Global ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Hide Streamlit chrome */
+#MainMenu, footer, header { visibility: hidden; }
+.block-container { padding-top: 2rem; padding-bottom: 2rem; }
+
+/* ── Sidebar ── */
+[data-testid="stSidebar"] {
+    background: #1a1a2e;
+    border-right: none;
+}
+[data-testid="stSidebar"] * {
+    color: #e2e8f0 !important;
+}
+[data-testid="stSidebar"] .stTextInput input,
+[data-testid="stSidebar"] .stSelectbox select,
+[data-testid="stSidebar"] .stNumberInput input {
+    background: #16213e !important;
+    border: 1px solid #2d3561 !important;
+    color: #e2e8f0 !important;
+    border-radius: 8px;
+}
+[data-testid="stSidebar"] hr {
+    border-color: #2d3561 !important;
+}
+[data-testid="stSidebar"] h1,
+[data-testid="stSidebar"] h2,
+[data-testid="stSidebar"] h3 {
+    color: #a5b4fc !important;
+    font-size: 0.85rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+[data-testid="stSidebar"] .stButton button {
+    background: #6366f1 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    width: 100%;
+    padding: 0.6rem 1rem !important;
+    transition: background 0.2s;
+}
+[data-testid="stSidebar"] .stButton button:hover {
+    background: #4f46e5 !important;
+}
+
+/* ── KPI cards ── */
+[data-testid="stMetric"] {
+    background: white;
+    border: 1px solid #e8ecf4;
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+[data-testid="stMetric"] label {
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #64748b !important;
+}
+[data-testid="stMetric"] [data-testid="stMetricValue"] {
+    font-size: 1.6rem !important;
+    font-weight: 700 !important;
+    color: #1a1a2e !important;
+}
+
+/* ── Tabs ── */
+[data-testid="stTabs"] [role="tablist"] {
+    gap: 0.5rem;
+    border-bottom: 2px solid #e8ecf4;
+}
+[data-testid="stTabs"] [role="tab"] {
+    border-radius: 8px 8px 0 0 !important;
+    padding: 0.5rem 1.2rem !important;
+    font-weight: 500 !important;
+    color: #64748b !important;
+    border: none !important;
+    background: transparent !important;
+}
+[data-testid="stTabs"] [role="tab"][aria-selected="true"] {
+    color: #6366f1 !important;
+    border-bottom: 2px solid #6366f1 !important;
+    font-weight: 600 !important;
+}
+
+/* ── Buttons (main area) ── */
+.stButton button {
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    transition: all 0.15s;
+}
+
+/* ── Divider ── */
+hr { border-color: #e8ecf4 !important; margin: 1.5rem 0 !important; }
+
+/* ── Dataframe ── */
+[data-testid="stDataFrame"] {
+    border: 1px solid #e8ecf4;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* ── Alert / info boxes ── */
+[data-testid="stAlert"] {
+    border-radius: 10px !important;
+    border-left-width: 4px !important;
+}
+
+/* ── Expander ── */
+[data-testid="stExpander"] {
+    border: 1px solid #e8ecf4 !important;
+    border-radius: 10px !important;
+    background: white;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# ── Page header ───────────────────────────────────────────────────────────────
+st.markdown("""
+<div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.25rem;">
+  <span style="font-size:2rem;">📊</span>
+  <div>
+    <h1 style="margin:0; font-size:1.75rem; font-weight:700; color:#1a1a2e; line-height:1.2;">
+      SentimentAggregator
+    </h1>
+    <p style="margin:0; font-size:0.85rem; color:#64748b;">
+      Japanese brand sentiment monitoring &amp; analysis
+    </p>
+  </div>
+</div>
+<hr style="margin-top:1rem;">
+""", unsafe_allow_html=True)
 
 # ── Sidebar ──────────────────────────────────────────────────────────────────
 with st.sidebar:
@@ -185,7 +324,11 @@ tab_analysis, tab_compare = st.tabs(["📊 分析 / Analysis", "🆚 ブラン�
 
 # ── Analysis tab ──────────────────────────────────────────────────────────────
 with tab_analysis:
-    st.header(f"「{current_keyword}」の感情分析結果")
+    st.markdown(f"""
+    <h2 style="font-size:1.3rem; font-weight:600; color:#1a1a2e; margin-bottom:1rem;">
+      「{current_keyword}」 — Sentiment Overview
+    </h2>
+    """, unsafe_allow_html=True)
 
     counts = df["sentiment"].value_counts()
     total = len(df)
@@ -194,17 +337,17 @@ with tab_analysis:
     neg = counts.get("negative", 0)
 
     k1, k2, k3, k4 = st.columns(4)
-    k1.metric("総コメント数", total)
-    k2.metric("ポジティブ 😊", f"{pos}  ({pos/total*100:.0f}%)")
-    k3.metric("ニュートラル 😐", f"{neu}  ({neu/total*100:.0f}%)")
-    k4.metric("ネガティブ 😞", f"{neg}  ({neg/total*100:.0f}%)")
+    k1.metric("Total Comments", total)
+    k2.metric("Positive 😊", f"{pos}", delta=f"{pos/total*100:.0f}%")
+    k3.metric("Neutral 😐", f"{neu}", delta=f"{neu/total*100:.0f}%", delta_color="off")
+    k4.metric("Negative 😞", f"{neg}", delta=f"{neg/total*100:.0f}%", delta_color="inverse")
 
     st.divider()
 
     col_pie, col_bar = st.columns(2)
 
     with col_pie:
-        st.subheader("感情の内訳 (Sentiment Breakdown)")
+        st.markdown("##### Sentiment Breakdown")
         pie_df = df["sentiment"].value_counts().reset_index()
         pie_df.columns = ["sentiment", "count"]
         fig_pie = px.pie(
@@ -220,7 +363,7 @@ with tab_analysis:
         st.plotly_chart(fig_pie, use_container_width=True)
 
     with col_bar:
-        st.subheader("信頼スコア分布 (Confidence Score Distribution)")
+        st.markdown("##### Confidence Score Distribution")
         if "score" in df.columns:
             fig_hist = px.histogram(
                 df,
@@ -238,7 +381,7 @@ with tab_analysis:
             st.info("スコア列がありません。")
 
     if "scraped_date" in df.columns and df["scraped_date"].nunique() > 1:
-        st.subheader("感情トレンド (Sentiment Over Time)")
+        st.markdown("##### Sentiment Over Time")
 
         # ── Alert check ───────────────────────────────────────────────────────
         alert_threshold = st.sidebar.slider(
@@ -345,7 +488,7 @@ with tab_analysis:
                         st.rerun()
 
     if "source" in df.columns:
-        st.subheader("ソース別感情 (Sentiment by Source)")
+        st.markdown("##### Sentiment by Source")
         source_sent = df.groupby(["source", "sentiment"]).size().reset_index(name="count")
         fig_src = px.bar(
             source_sent,
@@ -360,9 +503,13 @@ with tab_analysis:
         st.plotly_chart(fig_src, use_container_width=True)
 
     st.divider()
-    st.subheader("注目コメント (Notable Comments)")
+    st.markdown("##### Notable Comments")
 
     score_col = "score" if "score" in df.columns else None
+
+    CARD_COLORS = {"positive": "#dcfce7", "neutral": "#f1f5f9", "negative": "#fee2e2"}
+    CARD_BORDER  = {"positive": "#86efac", "neutral": "#cbd5e1", "negative": "#fca5a5"}
+    CARD_LABEL   = {"positive": "😊 Positive", "neutral": "😐 Neutral", "negative": "😞 Negative"}
 
     def show_top(sentiment: str, tab, n: int = 5):
         sub = df[df["sentiment"] == sentiment]
@@ -371,23 +518,40 @@ with tab_analysis:
         else:
             sub = sub.head(n)
         if sub.empty:
-            tab.info("コメントがありません。")
+            tab.info("No comments found.")
             return
+        bg = CARD_COLORS[sentiment]
+        border = CARD_BORDER[sentiment]
         for _, row in sub.iterrows():
-            with tab.container():
-                title = row.get("article_title", row.get("product_name", ""))
-                score_str = f"  `{row[score_col]:.2f}`" if score_col else ""
-                st.markdown(f"**{title}**{score_str}")
-                st.markdown(f"> {row['comment'][:300]}")
-                st.divider()
+            title = row.get("article_title", row.get("product_name", ""))
+            score_str = f"{row[score_col]:.2f}" if score_col else ""
+            source_str = row.get("source", "")
+            tab.markdown(f"""
+<div style="background:{bg}; border:1px solid {border}; border-radius:10px;
+            padding:1rem 1.25rem; margin-bottom:0.75rem;">
+  <div style="display:flex; justify-content:space-between; align-items:center;
+              margin-bottom:0.4rem;">
+    <span style="font-size:0.75rem; font-weight:600; color:#475569;
+                 text-transform:uppercase; letter-spacing:0.05em;">
+      {source_str} · {title[:60]}
+    </span>
+    <span style="font-size:0.8rem; font-weight:700; color:#475569;">
+      {score_str}
+    </span>
+  </div>
+  <p style="margin:0; font-size:0.95rem; line-height:1.6; color:#1e293b;">
+    {row['comment'][:300]}
+  </p>
+</div>
+""", unsafe_allow_html=True)
 
-    top_pos, top_neg, top_neu = st.tabs(["😊 ポジティブ Top 5", "😞 ネガティブ Top 5", "😐 ニュートラル Top 5"])
+    top_pos, top_neg, top_neu = st.tabs(["😊 Positive", "😞 Negative", "😐 Neutral"])
     show_top("positive", top_pos)
     show_top("negative", top_neg)
     show_top("neutral", top_neu)
 
     st.divider()
-    st.subheader("全コメント一覧 (All Comments)")
+    st.markdown("##### All Comments")
 
     filter_sentiment = st.multiselect(
         "感情フィルタ (Filter by sentiment)",
@@ -420,7 +584,11 @@ with tab_analysis:
 
 # ── Brand comparison tab ──────────────────────────────────────────────────────
 with tab_compare:
-    st.header("ブランド比較 / Brand Comparison")
+    st.markdown("""
+    <h2 style="font-size:1.3rem; font-weight:600; color:#1a1a2e; margin-bottom:1rem;">
+      Brand Comparison
+    </h2>
+    """, unsafe_allow_html=True)
 
     compare_df = st.session_state.get("full_df") or df
 
@@ -461,9 +629,7 @@ with tab_compare:
             st.dataframe(stats_df, use_container_width=True, hide_index=True)
 
             st.divider()
-
-            # ── Grouped bar chart
-            st.subheader("感情分布比較 (Sentiment Distribution)")
+            st.markdown("##### Sentiment Distribution")
             melted = stats_df.melt(
                 id_vars="ブランド",
                 value_vars=["ポジティブ %", "ニュートラル %", "ネガティブ %"],
@@ -489,7 +655,7 @@ with tab_compare:
 
             # ── Positive sentiment trend per brand (only if multi-date data exists)
             if "scraped_date" in cdf.columns and cdf["scraped_date"].nunique() > 1:
-                st.subheader("ポジティブ率トレンド比較 (Positive Sentiment Trend)")
+                st.markdown("##### Positive Sentiment Trend")
                 fig_trend_cmp = go.Figure()
                 palette = px.colors.qualitative.Set2
 
