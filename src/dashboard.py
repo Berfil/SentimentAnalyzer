@@ -250,69 +250,66 @@ def show_landing():
     """, unsafe_allow_html=True)
 
     # ── Navigation ────────────────────────────────────────────────────────────
-    st.markdown("""
-    <nav style="display:flex; align-items:center; justify-content:space-between;
-                padding:1.5rem 3rem; max-width:1200px; margin:0 auto;">
-      <div style="display:flex; align-items:center; gap:0.6rem;">
-        <div style="width:28px; height:28px; background:white; display:flex;
-                    align-items:center; justify-content:center;">
-          <div style="width:12px; height:12px; border-radius:50%; background:#E11D48;"></div>
-        </div>
-        <span style="font-size:1rem; font-weight:800; color:#ffffff;
-                     letter-spacing:-0.01em; font-family:'Cabinet Grotesk',sans-serif;">
-          KOKORO
-        </span>
-      </div>
-      <div style="display:flex; align-items:center; gap:2.5rem;">
-        <span style="font-size:0.875rem; color:#525252; cursor:default;">Features</span>
-        <span style="font-size:0.875rem; color:#525252; cursor:default;">Sources</span>
-      </div>
-    </nav>
-    """, unsafe_allow_html=True)
+    st.html("""
+<nav style="display:flex; align-items:center; justify-content:space-between;
+            padding:1.5rem 3rem; max-width:1200px; margin:0 auto;">
+  <div style="display:flex; align-items:center; gap:0.6rem;">
+    <div style="width:28px; height:28px; background:white; display:flex;
+                align-items:center; justify-content:center;">
+      <div style="width:12px; height:12px; border-radius:50%; background:#E11D48;"></div>
+    </div>
+    <span style="font-size:1rem; font-weight:800; color:#ffffff;
+                 letter-spacing:-0.01em; font-family:'Cabinet Grotesk',sans-serif;">
+      KOKORO
+    </span>
+  </div>
+  <div style="display:flex; align-items:center; gap:2.5rem;">
+    <span style="font-size:0.875rem; color:#525252; cursor:default;">Features</span>
+    <span style="font-size:0.875rem; color:#525252; cursor:default;">Sources</span>
+  </div>
+</nav>
+""")
 
     # ── Hero ──────────────────────────────────────────────────────────────────
     # Glow blob
-    st.markdown("""
-    <div style="position:fixed; top:-20%; right:-10%; width:600px; height:600px;
-                background:rgba(225,29,72,0.06); filter:blur(120px); border-radius:50%;
-                pointer-events:none; z-index:0;"></div>
-    <div style="position:fixed; bottom:-10%; left:-5%; width:400px; height:400px;
-                background:rgba(30,30,30,0.4); filter:blur(100px); border-radius:50%;
-                pointer-events:none; z-index:0;"></div>
-    """, unsafe_allow_html=True)
+    st.html("""
+<div style="position:fixed; top:-20%; right:-10%; width:600px; height:600px;
+            background:rgba(225,29,72,0.06); filter:blur(120px); border-radius:50%;
+            pointer-events:none; z-index:0;"></div>
+<div style="position:fixed; bottom:-10%; left:-5%; width:400px; height:400px;
+            background:rgba(30,30,30,0.4); filter:blur(100px); border-radius:50%;
+            pointer-events:none; z-index:0;"></div>
+""")
 
-    st.markdown("""
-    <div style="text-align:center; padding:5rem 2rem 2rem; max-width:900px; margin:0 auto;
-                position:relative; z-index:1;">
-
-      <div style="display:inline-flex; align-items:center; gap:0.5rem;
-                  padding:0.3rem 0.9rem; border-radius:999px;
-                  border:1px solid rgba(225,29,72,0.3); background:rgba(225,29,72,0.06);
-                  margin-bottom:1.5rem;">
-        <span style="width:6px; height:6px; border-radius:50%; background:#E11D48;
-                     display:inline-block;"></span>
-        <span style="font-size:0.65rem; font-weight:700; text-transform:uppercase;
-                     letter-spacing:0.12em; color:#E11D48;">Live Sentiment Engine</span>
-      </div>
-
-      <h1 style="font-size:clamp(3rem,7vw,5.5rem); font-weight:800; line-height:1.05;
-                 letter-spacing:-0.03em; color:#ffffff; margin:0 0 1.5rem;
-                 font-family:'Cabinet Grotesk',sans-serif;">
-        Decode the pulse of<br>
-        <span style="background:linear-gradient(90deg,#ffffff 0%,#8F8F8F 55%,#E11D48 100%);
-                     -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-                     background-clip:text;">
-          Japanese Social Media.
-        </span>
-      </h1>
-
-      <p style="font-size:1.05rem; color:#525252; max-width:560px; margin:0 auto 3rem;
-                line-height:1.75; font-family:'Satoshi',sans-serif;">
-        Analyze brand sentiment across Yahoo Japan, @cosme, Tabelog and Kakaku.com
-        with an NLP engine fine-tuned specifically for the Japanese market.
-      </p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.html("""
+<div style="text-align:center; padding:5rem 2rem 2rem; max-width:900px; margin:0 auto;
+            position:relative; z-index:1;">
+  <div style="display:inline-flex; align-items:center; gap:0.5rem;
+              padding:0.3rem 0.9rem; border-radius:999px;
+              border:1px solid rgba(225,29,72,0.3); background:rgba(225,29,72,0.06);
+              margin-bottom:1.5rem;">
+    <span style="width:6px; height:6px; border-radius:50%; background:#E11D48;
+                 display:inline-block;"></span>
+    <span style="font-size:0.65rem; font-weight:700; text-transform:uppercase;
+                 letter-spacing:0.12em; color:#E11D48;">Live Sentiment Engine</span>
+  </div>
+  <h1 style="font-size:clamp(3rem,7vw,5.5rem); font-weight:800; line-height:1.05;
+             letter-spacing:-0.03em; color:#ffffff; margin:0 0 1.5rem;
+             font-family:'Cabinet Grotesk',sans-serif;">
+    Decode the pulse of<br>
+    <span style="background:linear-gradient(90deg,#ffffff 0%,#8F8F8F 55%,#E11D48 100%);
+                 -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+                 background-clip:text;">
+      Japanese Social Media.
+    </span>
+  </h1>
+  <p style="font-size:1.05rem; color:#525252; max-width:560px; margin:0 auto 3rem;
+            line-height:1.75; font-family:'Satoshi',sans-serif;">
+    Analyze brand sentiment across Yahoo Japan, @cosme, Tabelog and Kakaku.com
+    with an NLP engine fine-tuned specifically for the Japanese market.
+  </p>
+</div>
+""")
 
     # CTA buttons
     _, c1, c2, _ = st.columns([2, 1, 1, 2])
@@ -328,190 +325,183 @@ def show_landing():
         )
 
     # ── Mock dashboard preview ─────────────────────────────────────────────────
-    st.markdown("""
-    <div style="max-width:900px; margin:3rem auto 0; position:relative; z-index:1;">
-      <div style="position:absolute; inset:-2px; background:linear-gradient(135deg,
-                  rgba(225,29,72,0.15), rgba(100,100,100,0.1));
-                  border-radius:20px; filter:blur(8px); opacity:0.6;"></div>
-      <div style="position:relative; background:rgba(13,13,13,0.9);
-                  border:1px solid rgba(255,255,255,0.07); border-radius:18px;
-                  overflow:hidden; backdrop-filter:blur(12px);">
-
-        <!-- Window bar -->
-        <div style="background:rgba(255,255,255,0.03); border-bottom:1px solid rgba(255,255,255,0.05);
-                    padding:0.9rem 1.5rem; display:flex; align-items:center; justify-content:space-between;">
-          <div style="display:flex; gap:0.5rem;">
-            <div style="width:12px;height:12px;border-radius:50%;background:#3a3a3a;"></div>
-            <div style="width:12px;height:12px;border-radius:50%;background:#3a3a3a;"></div>
-            <div style="width:12px;height:12px;border-radius:50%;background:#3a3a3a;"></div>
-          </div>
-          <span style="font-size:0.65rem; color:#525252; font-family:monospace;
-                       letter-spacing:0.1em;">DASHBOARD // KOKORO_OS_v2.0</span>
-          <div style="width:60px;"></div>
-        </div>
-
-        <!-- Dashboard content mock -->
-        <div style="padding:1.5rem; display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:1rem;">
-          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05);
-                      border-radius:12px; padding:1rem;">
-            <p style="margin:0 0 0.25rem; font-size:0.6rem; text-transform:uppercase;
-                      letter-spacing:0.1em; color:#525252;">Total Comments</p>
-            <p style="margin:0; font-size:1.75rem; font-weight:800; color:#fff;
-                      font-family:'Cabinet Grotesk',sans-serif;">4,821</p>
-          </div>
-          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05);
-                      border-radius:12px; padding:1rem;">
-            <p style="margin:0 0 0.25rem; font-size:0.6rem; text-transform:uppercase;
-                      letter-spacing:0.1em; color:#525252;">Positive 😊</p>
-            <p style="margin:0; font-size:1.75rem; font-weight:800; color:#10b981;
-                      font-family:'Cabinet Grotesk',sans-serif;">63%</p>
-          </div>
-          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05);
-                      border-radius:12px; padding:1rem;">
-            <p style="margin:0 0 0.25rem; font-size:0.6rem; text-transform:uppercase;
-                      letter-spacing:0.1em; color:#525252;">Neutral 😐</p>
-            <p style="margin:0; font-size:1.75rem; font-weight:800; color:#71717a;
-                      font-family:'Cabinet Grotesk',sans-serif;">24%</p>
-          </div>
-          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05);
-                      border-radius:12px; padding:1rem;">
-            <p style="margin:0 0 0.25rem; font-size:0.6rem; text-transform:uppercase;
-                      letter-spacing:0.1em; color:#525252;">Negative 😞</p>
-            <p style="margin:0; font-size:1.75rem; font-weight:800; color:#E11D48;
-                      font-family:'Cabinet Grotesk',sans-serif;">13%</p>
-          </div>
-        </div>
-
-        <!-- Mini chart bars -->
-        <div style="padding:0 1.5rem 1.5rem;">
-          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05);
-                      border-radius:12px; padding:1.25rem;">
-            <p style="margin:0 0 1rem; font-size:0.6rem; text-transform:uppercase;
-                      letter-spacing:0.1em; color:#525252;">Sentiment Over Time</p>
-            <div style="display:flex; align-items:flex-end; gap:4px; height:80px;">
-              <div style="background:rgba(225,29,72,0.4);  flex:1; height:40%; border-radius:3px 3px 0 0;"></div>
-              <div style="background:rgba(225,29,72,0.5);  flex:1; height:55%; border-radius:3px 3px 0 0;"></div>
-              <div style="background:rgba(225,29,72,0.4);  flex:1; height:35%; border-radius:3px 3px 0 0;"></div>
-              <div style="background:rgba(113,113,122,0.5);flex:1; height:50%; border-radius:3px 3px 0 0;"></div>
-              <div style="background:rgba(16,185,129,0.5); flex:1; height:70%; border-radius:3px 3px 0 0;"></div>
-              <div style="background:rgba(16,185,129,0.7); flex:1; height:85%; border-radius:3px 3px 0 0;"></div>
-              <div style="background:rgba(16,185,129,0.9); flex:1; height:95%; border-radius:3px 3px 0 0;"></div>
-              <div style="background:rgba(16,185,129,0.8); flex:1; height:80%; border-radius:3px 3px 0 0;"></div>
-            </div>
-          </div>
+    st.html("""
+<div style="max-width:900px; margin:3rem auto 0; position:relative; z-index:1;">
+  <div style="position:absolute; inset:-2px; background:linear-gradient(135deg,
+              rgba(225,29,72,0.15), rgba(100,100,100,0.1));
+              border-radius:20px; filter:blur(8px); opacity:0.6;"></div>
+  <div style="position:relative; background:rgba(13,13,13,0.9);
+              border:1px solid rgba(255,255,255,0.07); border-radius:18px;
+              overflow:hidden; backdrop-filter:blur(12px);">
+    <div style="background:rgba(255,255,255,0.03); border-bottom:1px solid rgba(255,255,255,0.05);
+                padding:0.9rem 1.5rem; display:flex; align-items:center; justify-content:space-between;">
+      <div style="display:flex; gap:0.5rem;">
+        <div style="width:12px;height:12px;border-radius:50%;background:#3a3a3a;"></div>
+        <div style="width:12px;height:12px;border-radius:50%;background:#3a3a3a;"></div>
+        <div style="width:12px;height:12px;border-radius:50%;background:#3a3a3a;"></div>
+      </div>
+      <span style="font-size:0.65rem; color:#525252; font-family:monospace;
+                   letter-spacing:0.1em;">DASHBOARD // KOKORO_OS_v2.0</span>
+      <div style="width:60px;"></div>
+    </div>
+    <div style="padding:1.5rem; display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:1rem;">
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05);
+                  border-radius:12px; padding:1rem;">
+        <p style="margin:0 0 0.25rem; font-size:0.6rem; text-transform:uppercase;
+                  letter-spacing:0.1em; color:#525252;">Total Comments</p>
+        <p style="margin:0; font-size:1.75rem; font-weight:800; color:#fff;
+                  font-family:'Cabinet Grotesk',sans-serif;">4,821</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05);
+                  border-radius:12px; padding:1rem;">
+        <p style="margin:0 0 0.25rem; font-size:0.6rem; text-transform:uppercase;
+                  letter-spacing:0.1em; color:#525252;">Positive</p>
+        <p style="margin:0; font-size:1.75rem; font-weight:800; color:#10b981;
+                  font-family:'Cabinet Grotesk',sans-serif;">63%</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05);
+                  border-radius:12px; padding:1rem;">
+        <p style="margin:0 0 0.25rem; font-size:0.6rem; text-transform:uppercase;
+                  letter-spacing:0.1em; color:#525252;">Neutral</p>
+        <p style="margin:0; font-size:1.75rem; font-weight:800; color:#71717a;
+                  font-family:'Cabinet Grotesk',sans-serif;">24%</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05);
+                  border-radius:12px; padding:1rem;">
+        <p style="margin:0 0 0.25rem; font-size:0.6rem; text-transform:uppercase;
+                  letter-spacing:0.1em; color:#525252;">Negative</p>
+        <p style="margin:0; font-size:1.75rem; font-weight:800; color:#E11D48;
+                  font-family:'Cabinet Grotesk',sans-serif;">13%</p>
+      </div>
+    </div>
+    <div style="padding:0 1.5rem 1.5rem;">
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05);
+                  border-radius:12px; padding:1.25rem;">
+        <p style="margin:0 0 1rem; font-size:0.6rem; text-transform:uppercase;
+                  letter-spacing:0.1em; color:#525252;">Sentiment Over Time</p>
+        <div style="display:flex; align-items:flex-end; gap:4px; height:80px;">
+          <div style="background:rgba(225,29,72,0.4);  flex:1; height:40%; border-radius:3px 3px 0 0;"></div>
+          <div style="background:rgba(225,29,72,0.5);  flex:1; height:55%; border-radius:3px 3px 0 0;"></div>
+          <div style="background:rgba(225,29,72,0.4);  flex:1; height:35%; border-radius:3px 3px 0 0;"></div>
+          <div style="background:rgba(113,113,122,0.5);flex:1; height:50%; border-radius:3px 3px 0 0;"></div>
+          <div style="background:rgba(16,185,129,0.5); flex:1; height:70%; border-radius:3px 3px 0 0;"></div>
+          <div style="background:rgba(16,185,129,0.7); flex:1; height:85%; border-radius:3px 3px 0 0;"></div>
+          <div style="background:rgba(16,185,129,0.9); flex:1; height:95%; border-radius:3px 3px 0 0;"></div>
+          <div style="background:rgba(16,185,129,0.8); flex:1; height:80%; border-radius:3px 3px 0 0;"></div>
         </div>
       </div>
     </div>
-    """, unsafe_allow_html=True)
+  </div>
+</div>
+""")
 
     # ── Stats row ─────────────────────────────────────────────────────────────
-    st.markdown("""
-    <div style="max-width:900px; margin:5rem auto 0; display:grid;
-                grid-template-columns:1fr 1fr 1fr; gap:1px;
-                background:rgba(255,255,255,0.06); border-radius:16px; overflow:hidden;
-                border:1px solid rgba(255,255,255,0.06);">
-      <div style="background:#050505; padding:2.5rem; text-align:center;">
-        <p style="margin:0 0 0.3rem; font-size:2.5rem; font-weight:800; color:#E11D48;
-                  font-family:'Cabinet Grotesk',sans-serif; letter-spacing:-0.03em;">4</p>
-        <p style="margin:0; font-size:0.8rem; color:#525252;">Data sources</p>
-      </div>
-      <div style="background:#050505; padding:2.5rem; text-align:center;
-                  border-left:1px solid rgba(255,255,255,0.06);
-                  border-right:1px solid rgba(255,255,255,0.06);">
-        <p style="margin:0 0 0.3rem; font-size:2.5rem; font-weight:800; color:#ffffff;
-                  font-family:'Cabinet Grotesk',sans-serif; letter-spacing:-0.03em;">ja</p>
-        <p style="margin:0; font-size:0.8rem; color:#525252;">Japanese NLP model</p>
-      </div>
-      <div style="background:#050505; padding:2.5rem; text-align:center;">
-        <p style="margin:0 0 0.3rem; font-size:2.5rem; font-weight:800; color:#10b981;
-                  font-family:'Cabinet Grotesk',sans-serif; letter-spacing:-0.03em;">∞</p>
-        <p style="margin:0; font-size:0.8rem; color:#525252;">Daily monitoring</p>
-      </div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.html("""
+<div style="max-width:900px; margin:5rem auto 0; display:grid;
+            grid-template-columns:1fr 1fr 1fr; gap:1px;
+            background:rgba(255,255,255,0.06); border-radius:16px; overflow:hidden;
+            border:1px solid rgba(255,255,255,0.06);">
+  <div style="background:#050505; padding:2.5rem; text-align:center;">
+    <p style="margin:0 0 0.3rem; font-size:2.5rem; font-weight:800; color:#E11D48;
+              font-family:'Cabinet Grotesk',sans-serif; letter-spacing:-0.03em;">4</p>
+    <p style="margin:0; font-size:0.8rem; color:#525252;">Data sources</p>
+  </div>
+  <div style="background:#050505; padding:2.5rem; text-align:center;
+              border-left:1px solid rgba(255,255,255,0.06);
+              border-right:1px solid rgba(255,255,255,0.06);">
+    <p style="margin:0 0 0.3rem; font-size:2.5rem; font-weight:800; color:#ffffff;
+              font-family:'Cabinet Grotesk',sans-serif; letter-spacing:-0.03em;">ja</p>
+    <p style="margin:0; font-size:0.8rem; color:#525252;">Japanese NLP model</p>
+  </div>
+  <div style="background:#050505; padding:2.5rem; text-align:center;">
+    <p style="margin:0 0 0.3rem; font-size:2.5rem; font-weight:800; color:#10b981;
+              font-family:'Cabinet Grotesk',sans-serif; letter-spacing:-0.03em;">&#8734;</p>
+    <p style="margin:0; font-size:0.8rem; color:#525252;">Daily monitoring</p>
+  </div>
+</div>
+""")
 
     # ── Sources section ───────────────────────────────────────────────────────
-    st.markdown("""
-    <div style="max-width:900px; margin:5rem auto 0;">
-      <p style="font-size:0.65rem; font-weight:700; text-transform:uppercase;
-                letter-spacing:0.12em; color:#525252; margin-bottom:1rem;">
-        Data Sources
+    st.html("""
+<div style="max-width:900px; margin:5rem auto 0;">
+  <p style="font-size:0.65rem; font-weight:700; text-transform:uppercase;
+            letter-spacing:0.12em; color:#525252; margin-bottom:1rem;">
+    Data Sources
+  </p>
+  <h2 style="font-size:2.5rem; font-weight:800; color:#ffffff; margin:0 0 0.75rem;
+             font-family:'Cabinet Grotesk',sans-serif; letter-spacing:-0.02em;">
+    The platforms that matter<br>
+    <span style="color:#525252;">in Japan.</span>
+  </h2>
+  <p style="color:#525252; font-size:0.9rem; line-height:1.7; margin:0 0 3rem;
+            max-width:480px;">
+    Built for the Japanese internet. Not a generic global tool &#8212; every scraper
+    is written specifically for the sites Japanese consumers actually use.
+  </p>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+    <div style="background:rgba(13,13,13,0.8); border:1px solid rgba(255,255,255,0.07);
+                border-radius:16px; padding:1.75rem; backdrop-filter:blur(12px);">
+      <div style="font-size:1.5rem; margin-bottom:0.75rem;">&#128240;</div>
+      <h4 style="margin:0 0 0.4rem; font-size:1rem; font-weight:700; color:#fff;
+                 font-family:'Cabinet Grotesk',sans-serif;">Yahoo Japan News</h4>
+      <p style="margin:0; font-size:0.8rem; color:#525252; line-height:1.6;">
+        News article comment sections &#8212; the pulse of public opinion on current events and brands.
       </p>
-      <h2 style="font-size:2.5rem; font-weight:800; color:#ffffff; margin:0 0 0.75rem;
-                 font-family:'Cabinet Grotesk',sans-serif; letter-spacing:-0.02em;">
-        The platforms that matter<br>
-        <span style="color:#525252;">in Japan.</span>
-      </h2>
-      <p style="color:#525252; font-size:0.9rem; line-height:1.7; margin:0 0 3rem;
-                max-width:480px;">
-        Built for the Japanese internet. Not a generic global tool — every scraper
-        is written specifically for the sites Japanese consumers actually use.
-      </p>
-
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-        <div style="background:rgba(13,13,13,0.8); border:1px solid rgba(255,255,255,0.07);
-                    border-radius:16px; padding:1.75rem; backdrop-filter:blur(12px);">
-          <div style="font-size:1.5rem; margin-bottom:0.75rem;">📰</div>
-          <h4 style="margin:0 0 0.4rem; font-size:1rem; font-weight:700; color:#fff;
-                     font-family:'Cabinet Grotesk',sans-serif;">Yahoo Japan News</h4>
-          <p style="margin:0; font-size:0.8rem; color:#525252; line-height:1.6;">
-            News article comment sections — the pulse of public opinion on current events and brands.
-          </p>
-        </div>
-        <div style="background:rgba(13,13,13,0.8); border:1px solid rgba(255,255,255,0.07);
-                    border-radius:16px; padding:1.75rem; backdrop-filter:blur(12px);
-                    transform:translateY(12px);">
-          <div style="font-size:1.5rem; margin-bottom:0.75rem;">💄</div>
-          <h4 style="margin:0 0 0.4rem; font-size:1rem; font-weight:700; color:#fff;
-                     font-family:'Cabinet Grotesk',sans-serif;">@cosme</h4>
-          <p style="margin:0; font-size:0.8rem; color:#525252; line-height:1.6;">
-            Japan's largest beauty review platform. Essential for cosmetics and skincare brands.
-          </p>
-        </div>
-        <div style="background:rgba(13,13,13,0.8); border:1px solid rgba(255,255,255,0.07);
-                    border-radius:16px; padding:1.75rem; backdrop-filter:blur(12px);">
-          <div style="font-size:1.5rem; margin-bottom:0.75rem;">🍽️</div>
-          <h4 style="margin:0 0 0.4rem; font-size:1rem; font-weight:700; color:#fff;
-                     font-family:'Cabinet Grotesk',sans-serif;">Tabelog</h4>
-          <p style="margin:0; font-size:0.8rem; color:#525252; line-height:1.6;">
-            Japan's definitive restaurant review site. Critical for F&B and hospitality brands.
-          </p>
-        </div>
-        <div style="background:rgba(13,13,13,0.8); border:1px solid rgba(255,255,255,0.07);
-                    border-radius:16px; padding:1.75rem; backdrop-filter:blur(12px);
-                    transform:translateY(12px);">
-          <div style="font-size:1.5rem; margin-bottom:0.75rem;">🛒</div>
-          <h4 style="margin:0 0 0.4rem; font-size:1rem; font-weight:700; color:#fff;
-                     font-family:'Cabinet Grotesk',sans-serif;">Kakaku.com</h4>
-          <p style="margin:0; font-size:0.8rem; color:#525252; line-height:1.6;">
-            Japan's top price comparison and product review site. Key for electronics and tech.
-          </p>
-        </div>
-      </div>
     </div>
-    """, unsafe_allow_html=True)
+    <div style="background:rgba(13,13,13,0.8); border:1px solid rgba(255,255,255,0.07);
+                border-radius:16px; padding:1.75rem; backdrop-filter:blur(12px);
+                transform:translateY(12px);">
+      <div style="font-size:1.5rem; margin-bottom:0.75rem;">&#128132;</div>
+      <h4 style="margin:0 0 0.4rem; font-size:1rem; font-weight:700; color:#fff;
+                 font-family:'Cabinet Grotesk',sans-serif;">@cosme</h4>
+      <p style="margin:0; font-size:0.8rem; color:#525252; line-height:1.6;">
+        Japan&#8217;s largest beauty review platform. Essential for cosmetics and skincare brands.
+      </p>
+    </div>
+    <div style="background:rgba(13,13,13,0.8); border:1px solid rgba(255,255,255,0.07);
+                border-radius:16px; padding:1.75rem; backdrop-filter:blur(12px);">
+      <div style="font-size:1.5rem; margin-bottom:0.75rem;">&#127869;</div>
+      <h4 style="margin:0 0 0.4rem; font-size:1rem; font-weight:700; color:#fff;
+                 font-family:'Cabinet Grotesk',sans-serif;">Tabelog</h4>
+      <p style="margin:0; font-size:0.8rem; color:#525252; line-height:1.6;">
+        Japan&#8217;s definitive restaurant review site. Critical for F&amp;B and hospitality brands.
+      </p>
+    </div>
+    <div style="background:rgba(13,13,13,0.8); border:1px solid rgba(255,255,255,0.07);
+                border-radius:16px; padding:1.75rem; backdrop-filter:blur(12px);
+                transform:translateY(12px);">
+      <div style="font-size:1.5rem; margin-bottom:0.75rem;">&#128722;</div>
+      <h4 style="margin:0 0 0.4rem; font-size:1rem; font-weight:700; color:#fff;
+                 font-family:'Cabinet Grotesk',sans-serif;">Kakaku.com</h4>
+      <p style="margin:0; font-size:0.8rem; color:#525252; line-height:1.6;">
+        Japan&#8217;s top price comparison and product review site. Key for electronics and tech.
+      </p>
+    </div>
+  </div>
+</div>
+""")
 
     # ── CTA banner ────────────────────────────────────────────────────────────
-    st.markdown("""
-    <div style="max-width:900px; margin:7rem auto 2rem;">
-      <div style="background:#0D0D0D; border:1px solid rgba(255,255,255,0.07);
-                  border-radius:28px; padding:4rem; text-align:center;
-                  position:relative; overflow:hidden;">
-        <div style="position:absolute; top:0; right:0; width:300px; height:300px;
-                    background:rgba(225,29,72,0.06); filter:blur(80px); border-radius:50%;
-                    pointer-events:none;"></div>
-        <h2 style="font-size:2.5rem; font-weight:800; color:#ffffff; margin:0 0 1rem;
-                   font-family:'Cabinet Grotesk',sans-serif; letter-spacing:-0.02em;
-                   position:relative;">
-          Ready to listen to Japan?
-        </h2>
-        <p style="color:#525252; font-size:0.9rem; margin:0 0 2.5rem; line-height:1.7;
-                  position:relative;">
-          Open the dashboard and start monitoring your brand sentiment today.
-        </p>
-      </div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.html("""
+<div style="max-width:900px; margin:7rem auto 2rem;">
+  <div style="background:#0D0D0D; border:1px solid rgba(255,255,255,0.07);
+              border-radius:28px; padding:4rem; text-align:center;
+              position:relative; overflow:hidden;">
+    <div style="position:absolute; top:0; right:0; width:300px; height:300px;
+                background:rgba(225,29,72,0.06); filter:blur(80px); border-radius:50%;
+                pointer-events:none;"></div>
+    <h2 style="font-size:2.5rem; font-weight:800; color:#ffffff; margin:0 0 1rem;
+               font-family:'Cabinet Grotesk',sans-serif; letter-spacing:-0.02em;
+               position:relative;">
+      Ready to listen to Japan?
+    </h2>
+    <p style="color:#525252; font-size:0.9rem; margin:0 0 2.5rem; line-height:1.7;
+              position:relative;">
+      Open the dashboard and start monitoring your brand sentiment today.
+    </p>
+  </div>
+</div>
+""")
 
     _, cc, _ = st.columns([2, 1, 2])
     with cc:
@@ -520,22 +510,22 @@ def show_landing():
             st.rerun()
 
     # ── Footer ────────────────────────────────────────────────────────────────
-    st.markdown("""
-    <div style="max-width:900px; margin:4rem auto 2rem;
-                border-top:1px solid rgba(255,255,255,0.06); padding-top:2rem;
-                display:flex; justify-content:space-between; align-items:center;">
-      <div style="display:flex; align-items:center; gap:0.5rem;">
-        <div style="width:18px; height:18px; background:white; display:flex;
-                    align-items:center; justify-content:center;">
-          <div style="width:8px; height:8px; border-radius:50%; background:#E11D48;"></div>
-        </div>
-        <span style="font-size:0.8rem; font-weight:800; color:#ffffff;
-                     font-family:'Cabinet Grotesk',sans-serif;">KOKORO</span>
-      </div>
-      <span style="font-size:0.65rem; color:#525252; font-family:monospace;
-                   letter-spacing:0.08em;">35.6762° N, 139.6503° E // TOKYO</span>
+    st.html("""
+<div style="max-width:900px; margin:4rem auto 2rem;
+            border-top:1px solid rgba(255,255,255,0.06); padding-top:2rem;
+            display:flex; justify-content:space-between; align-items:center;">
+  <div style="display:flex; align-items:center; gap:0.5rem;">
+    <div style="width:18px; height:18px; background:white; display:flex;
+                align-items:center; justify-content:center;">
+      <div style="width:8px; height:8px; border-radius:50%; background:#E11D48;"></div>
     </div>
-    """, unsafe_allow_html=True)
+    <span style="font-size:0.8rem; font-weight:800; color:#ffffff;
+                 font-family:'Cabinet Grotesk',sans-serif;">KOKORO</span>
+  </div>
+  <span style="font-size:0.65rem; color:#525252; font-family:monospace;
+               letter-spacing:0.08em;">35.6762&#176; N, 139.6503&#176; E // TOKYO</span>
+</div>
+""")
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
