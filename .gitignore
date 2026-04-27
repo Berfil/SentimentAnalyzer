@@ -23,8 +23,8 @@ data/benchmark_results.csv
 # Benchmark images
 models/*.png
 
-# Streamlit
-.streamlit/
+# Streamlit secrets (but keep config.toml)
+.streamlit/secrets.toml
 
 # OS
 .DS_Store
