@@ -478,6 +478,27 @@ def show_landing():
       </p>
     </div>
   </div>
+
+  <div style="margin-top:1rem; background:rgba(225,29,72,0.04);
+              border:1px solid rgba(225,29,72,0.2); border-radius:16px; padding:1.75rem;
+              backdrop-filter:blur(12px); display:flex; align-items:center; gap:1.5rem;">
+    <div style="font-size:2rem; flex-shrink:0;">&#120143;</div>
+    <div style="flex:1;">
+      <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.4rem;">
+        <h4 style="margin:0; font-size:1rem; font-weight:700; color:#fff;
+                   font-family:'Cabinet Grotesk',sans-serif;">Twitter / X</h4>
+        <span style="font-size:0.6rem; font-weight:700; text-transform:uppercase;
+                     letter-spacing:0.1em; color:#E11D48; padding:0.15rem 0.5rem;
+                     border:1px solid rgba(225,29,72,0.4); border-radius:999px;">
+          API
+        </span>
+      </div>
+      <p style="margin:0; font-size:0.8rem; color:#525252; line-height:1.6;">
+        Real-time Japanese tweets via the Twitter API v2. Requires a Bearer Token
+        from the Twitter Developer Portal &#8212; enter it in the dashboard sidebar when selecting this source.
+      </p>
+    </div>
+  </div>
 </div>
 """)
 
