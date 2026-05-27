@@ -555,6 +555,7 @@ def show_landing():
 def show_dashboard():
     st.markdown("""
     <style>
+    [data-testid="stSidebar"] { display: flex !important; }
     .block-container { padding: 2rem 2.5rem 3rem !important; max-width: 1400px; }
     </style>
     """, unsafe_allow_html=True)
