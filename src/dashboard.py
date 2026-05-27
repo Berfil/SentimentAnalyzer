@@ -235,31 +235,12 @@ hr { border-color: rgba(255,255,255,0.06) !important; margin: 1.75rem 0 !importa
 }
 
 /* ── File uploader ── */
+[data-testid="stFileUploaderDropzoneInstructions"] > div > span { display: none !important; }
 [data-testid="stFileUploader"] section {
     border: 1px dashed rgba(255,255,255,0.12) !important;
     border-radius: 10px !important;
     background: rgba(13,13,13,0.6) !important;
     padding: 0.5rem 0.75rem !important;
-}
-[data-testid="stFileUploaderDropzoneInstructions"] { display: none !important; }
-[data-testid="stFileUploader"] section button {
-    border-radius: 8px !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
-    background: rgba(255,255,255,0.04) !important;
-    font-size: 0 !important;
-    padding: 0.35rem 1rem !important;
-}
-[data-testid="stFileUploader"] section button::before {
-    content: "Upload";
-    font-size: 0.75rem !important;
-    font-weight: 500 !important;
-    color: #8F8F8F;
-}
-[data-testid="stFileUploader"] section button:hover {
-    background: rgba(255,255,255,0.08) !important;
-}
-[data-testid="stFileUploader"] section button:hover::before {
-    color: #fff;
 }
 </style>
 """, unsafe_allow_html=True)
