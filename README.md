@@ -145,18 +145,19 @@ Example cron job (runs every day at 8 AM):
 
 ---
 
-## Fine-tuning the Model
+## Model
 
-The default model is a pre-trained Japanese sentiment classifier. To fine-tune on your own labelled data:
+The sentiment engine uses a custom fine-tuned model built on top of [`cardiffnlp/twitter-xlm-roberta-base-sentiment`](https://huggingface.co/cardiffnlp/twitter-xlm-roberta-base-sentiment), fine-tuned by **Filip Berndtsson** on a hand-labelled dataset of Japanese social media comments (`data/labelled_comments.csv`).
 
-1. Add labelled comments to `data/labelled_comments.csv` (columns: `comment`, `sentiment`)
-2. Run the fine-tuning script:
+Fine-tuning was done specifically for the Japanese market — the base model was trained on multilingual Twitter data, but the fine-tuning step adapts it to the tone, vocabulary, and writing style of Japanese review platforms and news comment sections.
+
+The fine-tuned weights are stored locally at `models/finetuned_cardiffnlp/best/` and are excluded from the repository (too large for git). If the weights are not present, re-train with:
 
 ```bash
 python models/finetune.py
 ```
 
-Fine-tuned weights are saved to `models/finetuned/` (excluded from git via `.gitignore`).
+Labelled training data lives in `data/labelled_comments.csv` (columns: `comment`, `sentiment`). Adding more labelled examples and re-running the script will improve accuracy.
 
 ---
 
