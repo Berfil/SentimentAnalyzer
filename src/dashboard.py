@@ -236,19 +236,20 @@ hr { border-color: rgba(255,255,255,0.06) !important; margin: 1.75rem 0 !importa
 </style>
 """, unsafe_allow_html=True)
 
+# Sidebar + layout visibility — re-evaluated on every render
+_on_landing = st.session_state.get("page", "landing") == "landing"
+st.markdown(f"""
+<style>
+[data-testid="stSidebar"] {{ display: {"none" if _on_landing else "flex"} !important; }}
+.block-container {{ {"padding: 0 !important; max-width: 100% !important;" if _on_landing else "padding: 2rem 2.5rem 3rem !important; max-width: 1400px;"} }}
+</style>
+""", unsafe_allow_html=True)
+
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # LANDING PAGE
 # ═══════════════════════════════════════════════════════════════════════════════
 def show_landing():
-    # Hide sidebar on landing
-    st.markdown("""
-    <style>
-    [data-testid="stSidebar"] { display: none !important; }
-    .block-container { padding: 0 !important; max-width: 100% !important; }
-    </style>
-    """, unsafe_allow_html=True)
-
     # ── Navigation ────────────────────────────────────────────────────────────
     st.html("""
 <nav style="display:flex; align-items:center; justify-content:space-between;
@@ -553,12 +554,6 @@ def show_landing():
 # DASHBOARD PAGE
 # ═══════════════════════════════════════════════════════════════════════════════
 def show_dashboard():
-    st.markdown("""
-    <style>
-    [data-testid="stSidebar"] { display: flex !important; }
-    .block-container { padding: 2rem 2.5rem 3rem !important; max-width: 1400px; }
-    </style>
-    """, unsafe_allow_html=True)
 
     # ── Sidebar ───────────────────────────────────────────────────────────────
     with st.sidebar:
