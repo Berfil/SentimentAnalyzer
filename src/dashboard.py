@@ -605,7 +605,7 @@ def show_dashboard():
         st.markdown("""<p style="font-size:0.65rem; font-weight:500; text-transform:uppercase;
             letter-spacing:0.1em; color:#525252 !important; margin:0 0 0.5rem;">Load Data</p>""",
             unsafe_allow_html=True)
-        uploaded = st.file_uploader("Upload CSV", type="csv", label_visibility="visible")
+        uploaded = None
         load_default = st.button("Load default CSV")
 
         st.markdown("<div style='height:0.75rem'></div>", unsafe_allow_html=True)
@@ -649,10 +649,6 @@ def show_dashboard():
         else:
             st.error("Something went wrong — check the log above.")
 
-    if uploaded is not None:
-        st.session_state["df"] = pd.read_csv(uploaded, encoding="utf-8-sig")
-        st.session_state["keyword"] = uploaded.name.replace(".csv", "")
-
     if load_default and RESULTS_FILE.exists():
         loaded = pd.read_csv(RESULTS_FILE, encoding="utf-8-sig")
         st.session_state["df"] = loaded
@@ -688,7 +684,7 @@ def show_dashboard():
     if df is None or df.empty:
         st.markdown("""
         <div style="display:flex;flex-direction:column;align-items:center;
-                    padding:6rem 2rem;text-align:center;">
+                    padding:4rem 2rem 2rem;text-align:center;">
           <div style="width:64px;height:64px;background:rgba(13,13,13,0.8);
                       border:1px solid rgba(255,255,255,0.07);border-radius:16px;
                       display:flex;align-items:center;justify-content:center;
@@ -697,13 +693,20 @@ def show_dashboard():
                      font-family:'Cabinet Grotesk',sans-serif;letter-spacing:-0.02em;">
             No data loaded yet
           </h2>
-          <p style="margin:0;color:#525252;max-width:380px;line-height:1.7;font-size:0.875rem;">
+          <p style="margin:0 0 2rem;color:#525252;max-width:380px;line-height:1.7;font-size:0.875rem;">
             Enter a keyword in the sidebar and click
             <strong style="color:#8F8F8F;">Run Analysis</strong>
-            to scrape and analyse sentiment, or load an existing CSV.
+            to scrape and analyse sentiment, or upload an existing CSV below.
           </p>
         </div>
         """, unsafe_allow_html=True)
+        _, col, _ = st.columns([1, 2, 1])
+        with col:
+            uploaded = st.file_uploader("Upload CSV", type="csv")
+            if uploaded is not None:
+                st.session_state["df"] = pd.read_csv(uploaded, encoding="utf-8-sig")
+                st.session_state["keyword"] = uploaded.name.replace(".csv", "")
+                st.rerun()
         return
 
     if "sentiment" not in df.columns:
