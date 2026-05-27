@@ -246,13 +246,20 @@ hr { border-color: rgba(255,255,255,0.06) !important; margin: 1.75rem 0 !importa
     border-radius: 8px !important;
     border: 1px solid rgba(255,255,255,0.1) !important;
     background: rgba(255,255,255,0.04) !important;
-    color: #8F8F8F !important;
+    font-size: 0 !important;
+    padding: 0.35rem 1rem !important;
+}
+[data-testid="stFileUploader"] section button::before {
+    content: "Upload";
     font-size: 0.75rem !important;
     font-weight: 500 !important;
+    color: #8F8F8F;
 }
 [data-testid="stFileUploader"] section button:hover {
     background: rgba(255,255,255,0.08) !important;
-    color: #fff !important;
+}
+[data-testid="stFileUploader"] section button:hover::before {
+    color: #fff;
 }
 </style>
 """, unsafe_allow_html=True)
