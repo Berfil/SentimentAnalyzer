@@ -167,6 +167,8 @@ The sentiment engine uses a custom fine-tuned model built on top of [`cardiffnlp
 
 Fine-tuning was done specifically for the Japanese market — the base model was trained on multilingual Twitter data, but the fine-tuning step adapts it to the tone, vocabulary, and writing style of Japanese review platforms and news comment sections.
 
+See [`models/MODEL_CARD.md`](models/MODEL_CARD.md) for full details on training data, hyperparameters, evaluation, and limitations.
+
 The fine-tuned weights are stored locally at `models/finetuned_cardiffnlp/best/` and are excluded from the repository (too large for git). If the weights are not present, re-train with:
 
 ```bash
