@@ -239,7 +239,7 @@ hr { border-color: rgba(255,255,255,0.06) !important; margin: 1.75rem 0 !importa
     border: 1px dashed rgba(255,255,255,0.12) !important;
     border-radius: 10px !important;
     background: rgba(13,13,13,0.6) !important;
-    padding: 0.6rem 1rem !important;
+    padding: 0.5rem 0.75rem !important;
 }
 [data-testid="stFileUploaderDropzoneInstructions"] { display: none !important; }
 [data-testid="stFileUploader"] section button {
@@ -249,8 +249,6 @@ hr { border-color: rgba(255,255,255,0.06) !important; margin: 1.75rem 0 !importa
     color: #8F8F8F !important;
     font-size: 0.75rem !important;
     font-weight: 500 !important;
-    padding: 0.35rem 0.85rem !important;
-    width: 100% !important;
 }
 [data-testid="stFileUploader"] section button:hover {
     background: rgba(255,255,255,0.08) !important;
@@ -627,7 +625,7 @@ def show_dashboard():
         st.markdown("""<p style="font-size:0.65rem; font-weight:500; text-transform:uppercase;
             letter-spacing:0.1em; color:#525252 !important; margin:0 0 0.5rem;">Load Data</p>""",
             unsafe_allow_html=True)
-        uploaded = st.file_uploader("Upload CSV", type="csv", label_visibility="collapsed")
+        uploaded = st.file_uploader("Browse CSV", type="csv", label_visibility="collapsed")
         load_default = st.button("Load default CSV")
 
         st.markdown("<div style='height:0.75rem'></div>", unsafe_allow_html=True)
