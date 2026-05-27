@@ -234,14 +234,6 @@ hr { border-color: rgba(255,255,255,0.06) !important; margin: 1.75rem 0 !importa
     background: rgba(13,13,13,0.8) !important; color: white !important;
 }
 
-/* ── File uploader ── */
-[data-testid="stFileUploaderDropzoneInstructions"] > div > span { display: none !important; }
-[data-testid="stFileUploader"] section {
-    border: 1px dashed rgba(255,255,255,0.12) !important;
-    border-radius: 10px !important;
-    background: rgba(13,13,13,0.6) !important;
-    padding: 0.5rem 0.75rem !important;
-}
 </style>
 """, unsafe_allow_html=True)
 
@@ -613,7 +605,7 @@ def show_dashboard():
         st.markdown("""<p style="font-size:0.65rem; font-weight:500; text-transform:uppercase;
             letter-spacing:0.1em; color:#525252 !important; margin:0 0 0.5rem;">Load Data</p>""",
             unsafe_allow_html=True)
-        uploaded = st.file_uploader("Browse CSV", type="csv", label_visibility="collapsed")
+        uploaded = st.file_uploader("Upload CSV", type="csv", label_visibility="visible")
         load_default = st.button("Load default CSV")
 
         st.markdown("<div style='height:0.75rem'></div>", unsafe_allow_html=True)
