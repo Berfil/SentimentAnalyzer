@@ -57,7 +57,21 @@ Class weights were computed using sklearn's `balanced` strategy to counter the s
 
 ## Evaluation
 
-Pre-fine-tuning, the base model agreed with human labels on **67.0%** (304/454) of the training set. After fine-tuning on the human-labelled split, the model is evaluated on the held-out 15% validation set using macro F1 as the primary metric (reported during training via `classification_report`).
+### Fine-tuned model — validation set results (69 samples, 15% held-out stratified split)
+
+| Class | Precision | Recall | F1 | Support |
+|---|---|---|---|---|
+| Negative | 0.75 | 0.54 | 0.62 | 28 |
+| Neutral | 0.58 | 0.63 | 0.60 | 30 |
+| Positive | 0.50 | 0.73 | 0.59 | 11 |
+| **Macro avg** | **0.61** | **0.63** | **0.61** | 69 |
+| **Accuracy** | | | **0.61** | 69 |
+
+Training converged at epoch 3 of 5 (early stopping, patience=2). Best checkpoint macro F1: **0.607**.
+
+### Base model baseline
+
+The base model (`cardiffnlp/twitter-xlm-roberta-base-sentiment`, before fine-tuning) agreed with human labels on **67.0%** (304/454) of the full labelled dataset. Note this is measured on the combined train+validation set, not a held-out test set, so it is not directly comparable to the post-fine-tuning numbers above — it serves as a rough indicator of how well the base multilingual model handles Japanese review text out of the box.
 
 To re-run evaluation:
 
