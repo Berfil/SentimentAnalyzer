@@ -79,7 +79,7 @@ st.set_page_config(
     page_title="KOKORO | Japanese Sentiment Engine",
     page_icon="🔴",
     layout="wide",
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="expanded",
 )
 
 # ── Shared CSS ────────────────────────────────────────────────────────────────
@@ -240,7 +240,7 @@ hr { border-color: rgba(255,255,255,0.06) !important; margin: 1.75rem 0 !importa
 _on_landing = st.session_state.get("page", "landing") == "landing"
 st.markdown(f"""
 <style>
-[data-testid="stSidebar"] {{ display: {"none" if _on_landing else "flex"} !important; }}
+[data-testid="stSidebar"] {{ display: {"none" if _on_landing else "block"} !important; }}
 .block-container {{ {"padding: 0 !important; max-width: 100% !important;" if _on_landing else "padding: 2rem 2.5rem 3rem !important; max-width: 1400px;"} }}
 </style>
 """, unsafe_allow_html=True)
