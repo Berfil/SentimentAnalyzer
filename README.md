@@ -1,6 +1,22 @@
-# KOKORO — Japanese Brand Sentiment Engine
+<div align="center">
 
-A sentiment analysis tool for monitoring how Japanese consumers talk about brands and products across major Japanese social media and review platforms. Scrapes comments in real time, classifies them as Positive / Neutral / Negative using a Japanese NLP model, and displays the results in a dark-themed Streamlit dashboard.
+![KOKORO hero](assets/hero.png)
+
+<h1>KOKORO</h1>
+<p><strong>Decode the pulse of Japanese Social Media.</strong></p>
+
+<p>
+  <img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Streamlit-1.56-FF4B4B?style=flat-square&logo=streamlit&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Model-Fine--tuned_XLM--RoBERTa-E11D48?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Sources-5_platforms-10b981?style=flat-square"/>
+</p>
+
+<p>
+A sentiment analysis tool for monitoring how Japanese consumers talk about brands and products across major Japanese social media and review platforms. Scrapes comments in real time, classifies them as Positive / Neutral / Negative using a Japanese NLP model fine-tuned by <strong>Filip Berndtsson</strong>, and displays results in a dark-themed Streamlit dashboard.
+</p>
+
+</div>
 
 ---
 
