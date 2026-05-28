@@ -16,3 +16,4 @@ tqdm>=4.66.0
 tweepy>=4.14.0
 streamlit>=1.30.0
 plotly>=5.18.0
+pytest>=8.0.0
